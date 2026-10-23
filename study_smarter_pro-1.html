@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#172554">
+<title>Study Smarter — AI Study Coach</title>
+<style>
+:root{--navy:#172554;--blue:#3156d3;--sky:#eaf0ff;--ink:#172033;--muted:#667085;--line:#e4e8f0;--paper:#fff;--bg:#f5f7fb;--green:#147d52;--gold:#fff4d6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:linear-gradient(135deg,#172554,#3156d3);color:#fff;padding:26px 18px 24px}
+.wrap{max-width:980px;margin:auto} .brand{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+h1{font-size:clamp(28px,6vw,42px);line-height:1.1;margin:9px 0}header p{max-width:650px;margin:10px 0 0;color:#e7ecff}
+main{padding:18px;max-width:980px;margin:auto}.notice{background:var(--gold);border:1px solid #f1dda1;border-radius:12px;padding:12px 14px;font-size:13px;margin-bottom:16px}
+.tabs{display:flex;gap:8px;overflow:auto;padding:2px 0 12px}.tab{border:1px solid var(--line);background:white;border-radius:999px;padding:10px 14px;white-space:nowrap;font-weight:700;color:var(--ink);cursor:pointer}.tab.active{background:var(--navy);color:white;border-color:var(--navy)}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px;box-shadow:0 5px 18px #1c2a4a0a}
+h2{font-size:22px;margin:0 0 5px}h3{font-size:17px;margin:0 0 7px}.muted{color:var(--muted);font-size:14px;margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+label{display:block;font-size:13px;font-weight:750;margin:12px 0 5px}
+input,select,textarea{width:100%;border:1px solid #cfd6e4;border-radius:10px;padding:12px;font:inherit;background:white;color:var(--ink)}
+textarea{min-height:100px;resize:vertical}
+button{font:inherit;cursor:pointer}.btn{border:0;border-radius:10px;background:var(--blue);color:white;font-weight:800;padding:12px 15px}.btn.secondary{background:var(--sky);color:var(--navy);border:1px solid #d4defe}.btn.dark{background:var(--navy)}.btn.small{padding:8px 11px;font-size:13px}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.output{background:#f7f9ff;border:1px solid #dce4ff;border-radius:12px;padding:13px;margin-top:14px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px}
+.card{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff}.card p{font-size:14px;color:var(--muted);margin:4px 0 12px}
+.badge{display:inline-block;border-radius:999px;background:#edf8f2;color:var(--green);font-size:12px;font-weight:800;padding:4px 8px;margin-bottom:8px}
+ul.clean{padding-left:20px;margin-bottom:0}.clean li{margin:7px 0}
+.progressbar{height:9px;background:#e8ecf5;border-radius:99px;overflow:hidden;margin:10px 0}.progressbar span{display:block;height:100%;width:0;background:var(--blue);transition:width .2s}
+.task{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.task:last-child{border-bottom:0}.task input{width:auto;margin-top:5px}
+footer{text-align:center;padding:18px;color:var(--muted);font-size:12px}
+.hidden{display:none!important}.tiny{font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="brand">STUDY SMARTER · PERSONAL AI STUDY COACH</div>
+  <h1>Study smarter.<br>Build confidence.</h1>
+  <p>A practical toolkit to understand difficult topics, practice actively, organize coursework, and learn with AI—without letting AI do all the thinking for you.</p>
+</div></header>
+<main>
+  <div class="notice"><strong>Prototype preview:</strong> This free version creates prompts you can copy into an AI assistant. It does not include a paid AI connection. Check important facts against your course materials and follow your school’s academic-integrity rules.</div>
+  <nav class="tabs" aria-label="Main sections">
+    <button class="tab active" data-tab="coach">Study Coach</button>
+    <button class="tab" data-tab="practice">Practice & Flashcards</button>
+    <button class="tab" data-tab="planner">Study Planner</button>
+    <button class="tab" data-tab="progress">My Progress</button>
+    <button class="tab" data-tab="product">Product Page</button>
+  </nav>
+
+  <section id="coach" class="tabpage">
+    <div class="panel">
+      <h2>Build your study prompt</h2><p class="muted">Tell the coach what you need. It will prepare a structured prompt for you to use with your preferred AI assistant.</p>
+      <div class="grid">
+        <div><label for="subject">Subject or course</label><input id="subject" placeholder="e.g., General Biology"></div>
+        <div><label for="level">Your level</label><select id="level"><option>College beginner</option><option>College intermediate</option><option>College advanced</option><option>High school</option></select></div>
+        <div><label for="goal">What do you need?</label><select id="goal"><option value="explain">Explain a difficult concept</option><option value="notes">Organize lecture notes</option><option value="essay">Improve an academic paragraph</option><option value="plan">Break down an assignment</option><option value="exam">Prepare for an exam</option><option value="teach">Use the teach-it-back method</option></select></div>
+      </div>
+      <label for="topic">Topic, notes, question, or assignment instructions</label><textarea id="topic" placeholder="Paste your topic or notes here. Remove private information first."></textarea>
+      <div class="actions"><button class="btn" id="makePrompt">Generate my prompt</button><button class="btn secondary" id="clearCoach">Clear</button></div>
+      <div id="coachOutput" class="output hidden" aria-live="polite"></div>
+      <div class="actions"><button class="btn dark hidden" id="copyCoach">Copy prompt</button></div>
+    </div>
+    <div class="panel"><h2>Study smarter rules</h2><div class="grid">
+      <div class="card"><span class="badge">01 · Understand</span><h3>Ask for clarity</h3><p>Request plain-language explanations, examples, and common misconceptions.</p></div>
+      <div class="card"><span class="badge">02 · Retrieve</span><h3>Test yourself</h3><p>Try answering questions before viewing the answers or explanations.</p></div>
+      <div class="card"><span class="badge">03 · Verify</span><h3>Check the source</h3><p>Compare AI-generated information with lectures, textbooks, and instructor guidance.</p></div>
+    </div></div>
+  </section>
+
+  <section id="practice" class="tabpage hidden">
+    <div class="panel"><h2>Practice & flashcards</h2><p class="muted">Generate active-recall prompts from a topic or your own notes.</p>
+      <label for="practiceTopic">Topic or notes</label><textarea id="practiceTopic" placeholder="e.g., Cell respiration: glycolysis, Krebs cycle, electron transport chain"></textarea>
+      <label for="practiceType">Practice type</label><select id="practiceType"><option value="quiz">Practice quiz</option><option value="cards">Flashcards</option><option value="oral">Oral-exam practice</option><option value="mistakes">Find gaps in my understanding</option></select>
+      <div class="actions"><button class="btn" id="makePractice">Create practice prompt</button></div>
+      <div id="practiceOutput" class="output hidden" aria-live="polite"></div><div class="actions"><button class="btn dark hidden" id="copyPractice">Copy prompt</button></div>
+    </div>
+    <div class="panel"><h2>10-minute study sprint</h2><ol class="clean"><li><strong>2 minutes:</strong> write what you already know.</li><li><strong>5 minutes:</strong> answer practice questions without notes.</li><li><strong>2 minutes:</strong> check mistakes using trusted course materials.</li><li><strong>1 minute:</strong> write one thing to review next time.</li></ol></div>
+  </section>
+
+  <section id="planner" class="tabpage hidden">
+    <div class="panel"><h2>Assignment breakdown</h2><p class="muted">Turn a big task into manageable steps. You stay responsible for the work.</p>
+      <label for="assignment">Assignment or exam goal</label><textarea id="assignment" placeholder="e.g., Finish a 1,500-word research paper on renewable energy"></textarea>
+      <div class="grid"><div><label for="deadline">Deadline</label><input type="date" id="deadline"></div><div><label for="dailyTime">Time available per day</label><select id="dailyTime"><option>15 minutes</option><option>30 minutes</option><option>45 minutes</option><option>1 hour</option><option>2 hours</option></select></div></div>
+      <div class="actions"><button class="btn" id="makePlan">Create planning prompt</button></div>
+      <div id="planOutput" class="output hidden" aria-live="polite"></div><div class="actions"><button class="btn dark hidden" id="copyPlan">Copy prompt</button></div>
+    </div>
+    <div class="panel"><h2>Quick task list</h2><div class="grid"><div><label for="newTask">Add a task</label><input id="newTask" placeholder="e.g., Review chapter 3"></div><div style="align-self:end"><button class="btn" id="addTask">Add task</button></div></div><div id="taskList"></div></div>
+  </section>
+
+  <section id="progress" class="tabpage hidden">
+    <div class="panel"><h2>My progress</h2><p class="muted">Your checklist is saved locally in this browser on this device.</p><div id="progressText">0 of 0 tasks complete</div><div class="progressbar"><span id="progressFill"></span></div><div id="progressTasks"></div><div class="actions"><button class="btn secondary" id="clearTasks">Clear all tasks</button></div><p class="tiny">Clearing site data or switching browsers may remove locally saved progress.</p></div>
+  </section>
+
+  <section id="product" class="tabpage hidden">
+    <div class="panel">
+      <span class="badge">EARLY ACCESS · PROTOTYPE</span>
+      <h2>Study Smarter — Your Personal AI Study Coach</h2>
+      <p class="muted">A student-friendly toolkit for clearer explanations, better practice, and more organized study sessions.</p>
+      <div class="grid">
+        <div class="card"><h3>Understand concepts</h3><p>Break complex topics into plain-language explanations, examples, and checks for understanding.</p></div>
+        <div class="card"><h3>Practice actively</h3><p>Build quizzes, flashcards, and teach-it-back exercises from your own course material.</p></div>
+        <div class="card"><h3>Stay organized</h3><p>Break assignments into smaller steps and keep track of your study tasks.</p></div>
+      </div>
+      <h3 style="margin-top:20px">Who it is for</h3><p>College students who want a practical starting point for using AI responsibly as a study aid.</p>
+      <h3>What it is not</h3><p>This prototype is not a teacher, a guarantee of grades, or a replacement for official course materials. It does not automatically submit assignments or verify AI answers.</p>
+      <div class="notice">This page is a prototype, not a live store. No payment is collected here. Validate usefulness with a few students before setting a price or advertising results.</div>
+      <div class="actions"><button class="btn" id="tryCoach">Try the study coach</button><button class="btn secondary" id="sharePage">Share this page</button></div><div id="shareStatus" class="tiny" aria-live="polite"></div>
+    </div>
+  </section>
+  <footer>Study Smarter · Early prototype · Built to support independent learning</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let lastPrompts={coach:"",practice:"",plan:""};
+const templates={
+explain:(s,l,t)=>`Act as a patient study coach for a ${l} student studying ${s||"my course"}. Help me understand this topic: \n\n${t}\n\nPlease: 1) explain the main idea in plain language; 2) define key terms; 3) give one accurate example and one analogy; 4) point out common misconceptions; 5) ask me three questions one at a time; 6) wait for my answer before revealing feedback. Do not assume facts missing from my notes. Flag anything I should verify in my course materials.`,
+notes:(s,l,t)=>`Help me organize these notes for ${s||"my course"} at ${l} level:\n\n${t}\n\nCreate: a concise outline, key terms and definitions, cause-and-effect relationships where relevant, 5 active-recall questions, and a list of unclear claims to verify. Preserve the meaning of my notes and do not invent details. End with a short self-test without answers; provide answers only after I try.`,
+essay:(s,l,t)=>`Act as an academic writing coach, not a ghostwriter. Review this paragraph or assignment context for ${s||"my course"}:\n\n${t}\n\nHelp me improve clarity, structure, grammar, and reasoning. First identify strengths and the three most important improvements. Ask me what I intend to argue if it is unclear. Give brief examples of revisions and explain why they help. Preserve my own ideas and voice; do not fabricate sources or citations. Remind me to follow my school's AI-use rules.`,
+plan:(s,l,t)=>`Help me plan this assignment for ${s||"my course"} at ${l} level:\n\n${t}\n\nBreak it into small steps with estimated time, a sensible order, checkpoints, and a final review. Identify what I need to clarify with my instructor. Do not complete the assignment for me. Make the plan realistic and include breaks.`,
+exam:(s,l,t)=>`Help me prepare for an exam in ${s||"my course"} at ${l} level. Topics and notes:\n\n${t}\n\nStart by asking what the exam format is if I have not said. Then create a balanced revision plan, a short diagnostic quiz, active-recall questions, and a list of topics to revisit based on my answers. Ask one question at a time and explain mistakes without shaming me. Distinguish facts from uncertain information.`,
+teach:(s,l,t)=>`Use the teach-it-back method to help me learn ${s||"my course"} at ${l} level.\n\nTopic or notes:\n${t}\n\nAsk me to explain the topic in my own words first. Do not give a full explanation immediately. After I respond, identify what I understood, what is missing, and any misconception. Give one hint at a time, then ask me to try again. Finish with a brief recap and one question for independent practice.`
+};
+function showOutput(id,copyId,text){$(id).textContent=text;$(id).classList.remove("hidden");$(copyId).classList.remove("hidden")}
+function hideOutput(id,copyId){$(id).classList.add("hidden");$(copyId).classList.add("hidden")}
+$("makePrompt").addEventListener("click",()=>{const t=$("topic").value.trim();if(!t){$("topic").focus();return}lastPrompts.coach=templates[$("goal").value]($("subject").value.trim(),$("level").value,t);showOutput("coachOutput","copyCoach",lastPrompts.coach)});
+$("clearCoach").addEventListener("click",()=>{$("topic").value="";hideOutput("coachOutput","copyCoach")});
+const practiceTemplates={
+quiz:t=>`Create a practice quiz from this material:\n${t}\nAsk one question at a time. Mix recall, application, and reasoning. Do not show the answer until I respond. Then explain the answer and why tempting wrong answers are wrong. Do not test information absent from my material; flag uncertain facts for verification.`,
+cards:t=>`Turn this material into useful active-recall flashcards:\n${t}\nMake concise question/answer pairs, one idea per card. Include definitions, comparisons, processes, and application where relevant. Mark any unclear claims to verify. Show the questions first, then a separate answer key.`,
+oral:t=>`Act as an oral-exam practice partner using this material:\n${t}\nAsk one question at a time, wait for my answer, and then give specific feedback on accuracy, completeness, and clarity. Ask follow-up questions that test understanding. Do not reveal model answers before I try.`,
+mistakes:t=>`Help identify gaps in my understanding of this material:\n${t}\nStart with five diagnostic questions, one at a time. Use my answers to identify likely gaps, explain misconceptions, and recommend what to review. Do not assume I am wrong without evidence.`
+};
+$("makePractice").addEventListener("click",()=>{const t=$("practiceTopic").value.trim();if(!t){$("practiceTopic").focus();return}lastPrompts.practice=practiceTemplates[$("practiceType").value](t);showOutput("practiceOutput","copyPractice",lastPrompts.practice)});
+$("makePlan").addEventListener("click",()=>{const t=$("assignment").value.trim();if(!t){$("assignment").focus();return}const date=$("deadline").value||"not specified";lastPrompts.plan=`Create a realistic study/work plan for this goal:\n${t}\nDeadline: ${date}\nTime available per day: ${$("dailyTime").value}\nBreak the work into small, ordered tasks with estimated durations, milestones, and a final quality check. Add buffer time and rest. Ask me to clarify any missing requirements. Do not do the assignment for me.`;showOutput("planOutput","copyPlan",lastPrompts.plan)});
+function copy(text,status){if(!text)return; if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(()=>status.textContent="Copied. Paste it into your AI assistant.").catch(()=>fallbackCopy(text,status))}else fallbackCopy(text,status)}
+function fallbackCopy(text,status){const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");status.textContent="Copy attempted. If it failed, select and copy the text manually."}catch(e){status.textContent="Select the prompt text and copy it manually."}ta.remove()}
+$("copyCoach").addEventListener("click",()=>copy(lastPrompts.coach,$("coachOutput")));
+$("copyPractice").addEventListener("click",()=>copy(lastPrompts.practice,$("practiceOutput")));
+$("copyPlan").addEventListener("click",()=>copy(lastPrompts.plan,$("planOutput")));
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".tabpage").forEach(p=>p.classList.toggle("hidden",p.id!==b.dataset.tab))}));
+$("tryCoach").addEventListener("click",()=>{document.querySelector('[data-tab="coach"]').click();window.scrollTo({top:0,behavior:"smooth"})});
+$("sharePage").addEventListener("click",async()=>{const status=$("shareStatus");if(navigator.share){try{await navigator.share({title:document.title,text:"Try Study Smarter — a prototype AI study coach",url:location.href});status.textContent="Share menu opened."}catch(e){status.textContent="Sharing cancelled or unavailable."}}else{copy(location.href,status)}});
+const STORE="studySmarterTasksV1";let tasks=[];try{tasks=JSON.parse(localStorage.getItem(STORE)||"[]")}catch(e){tasks=[]}
+function saveTasks(){try{localStorage.setItem(STORE,JSON.stringify(tasks))}catch(e){}renderTasks()}
+function renderTasks(){const list=$("taskList"),prog=$("progressTasks");list.innerHTML="";prog.innerHTML="";tasks.forEach((task,i)=>{const row=document.createElement("div");row.className="task";const cb=document.createElement("input");cb.type="checkbox";cb.checked=task.done;cb.setAttribute("aria-label","Mark task complete");cb.addEventListener("change",()=>{tasks[i].done=cb.checked;saveTasks()});const label=document.createElement("label");label.style.margin="0";label.style.fontWeight="500";label.textContent=task.text;label.style.textDecoration=task.done?"line-through":"none";row.append(cb,label);list.appendChild(row);prog.appendChild(row.cloneNode(true));const pcb=prog.lastChild.querySelector("input");pcb.checked=task.done;pcb.addEventListener("change",()=>{tasks[i].done=pcb.checked;saveTasks()})});const done=tasks.filter(t=>t.done).length;$("progressText").textContent=`${done} of ${tasks.length} tasks complete`; $("progressFill").style.width=(tasks.length?done/tasks.length*100:0)+"%"}
+$("addTask").addEventListener("click",()=>{const v=$("newTask").value.trim();if(!v)return;tasks.push({text:v,done:false});$("newTask").value="";saveTasks()});
+$("newTask").addEventListener("keydown",e=>{if(e.key==="Enter")$("addTask").click()});
+$("clearTasks").addEventListener("click",()=>{if(confirm("Clear all study tasks on this device?")){tasks=[];saveTasks()}});
+renderTasks();
+</script>
+</body>
+</html>
